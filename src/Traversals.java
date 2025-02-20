@@ -91,6 +91,7 @@ public class Traversals {
    * @return the number of unique values in the tree, or 0 if the tree is null
    */
   public static int countDistinctValues(TreeNode<Integer> node) {
+    // HashSet automatically ensures that there is only unique values stored
     Set<Integer> unique = new HashSet<>();
     
     traverse(node, unique);
@@ -116,7 +117,13 @@ public class Traversals {
    * @return true if there exists a strictly increasing root-to-leaf path, false otherwise
    */
   public static boolean hasStrictlyIncreasingPath(TreeNode<Integer> node) {
-    return false;
+    if (node == null) return false;
+    
+    boolean left = hasStrictlyIncreasingPath(node.left);
+    boolean right = hasStrictlyIncreasingPath(node.right);
+
+    if (node.value < node.left.value || node.value < node.right.value) return true;
+    return left || right;
   }
 
   // OPTIONAL CHALLENGE
